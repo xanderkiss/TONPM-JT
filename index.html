@@ -189,25 +189,21 @@
                 document.getElementById("pm-widget").style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 
           
-         const aqiImageElement = document.getElementById('aqi-image');
-
-        if (aqi >= 0 && aqi <= 25) {
-          aqiImageElement.src = './aqi_icon/ic-face-green.svg';
-          aqiImageElement.alt = 'Good';
-        } else if (aqi > 25 && aqi <= 50) {
-          aqiImageElement.src = './aqi_icon/ic-face-yellow.svg';
-          aqiImageElement.alt = 'Moderate';
-        } else if (aqi > 50 && aqi <= 100) {
-          aqiImageElement.src = './aqi_icon/ic-face-orange.svg';
-          aqiImageElement.alt = 'Unhealthy for sensitive groups';
-        } else if (aqi > 100 && aqi <= 200) {
-          aqiImageElement.src = './aqi_icon/ic-face-red.svg';
-          aqiImageElement.alt = 'Unhealthy';
-        } else {
-          aqiImageElement.src = './aqi_icon/ic-face-purple.svg';
-          aqiImageElement.alt = 'Very Unhealthy';
-        }
-      })
+const aqiImageElement = document.getElementById('aqi-image');
+                if (aqi <= 50) {
+                    aqiImageElement.src = './aqi_icon/ic-face-green.svg';
+                    aqiImageElement.alt = 'Good';
+                } else if (aqi <= 100) {
+                    aqiImageElement.src = './aqi_icon/ic-face-yellow.svg';
+                    aqiImageElement.alt = 'Moderate';
+                } else if (aqi <= 200) {
+                    aqiImageElement.src = './aqi_icon/ic-face-orange.svg';
+                    aqiImageElement.alt = 'Unhealthy';
+                } else {
+                    aqiImageElement.src = './aqi_icon/ic-face-red.svg';
+                    aqiImageElement.alt = 'Very Unhealthy';
+                }
+            })
       .catch(error => console.error(error));
   </script>
 
