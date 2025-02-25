@@ -171,7 +171,7 @@
             document.getElementById('current-datetime').textContent = `อัพเดตล่าสุด: ${now.toLocaleDateString('th-TH', options)}`;
         }
 
-        setInterval(updateDateTime, 600000);
+        setInterval(updateDateTime, 1000);
         updateDateTime();
 
         fetch(aqiUrl)
