@@ -1,112 +1,211 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ตรวจสอบค่าฝุ่น PM2.5</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-        .container {
-            max-width: 600px;
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PM2.5 Widget</title>
+  <style>
+    :root {
+      /* ปรับขนาดของตัวเลขและข้อความได้จากตัวแปรเหล่านี้ */
+      --title-size: 4em;
+      --value0-size: 20em;
+      --value-size: 10em;
+      --text-size: 2em;
+      --small-text-size: 3em;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 92vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+    #pm-widget {
+      background-color: #ffffff;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      width: 75vw;
+      max-width: 1080px;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #aqi-image {
+      width: 250px;
+      height: 250px;
+      margin: 0 auto;
+    }
+         #aqi-image-container {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        h1 {
+    .pm-title {
+      font-size: var(--title-size);
+      font-weight: bold;
+    }
+    .pm-value0 {
+      font-size: var(--value0-size);
+      font-weight: bold;
+      color: #333;
+   }
+    .pm-value {
+      font-size: var(--value-size);
+      font-weight: bold;
+      color: #333;
+    }
+    .pm-text {
+      font-size: var(--text-size);
+      color: #050505;
+      margin: 2px 0;
+    }
+    .small-text {
+      font-size: var(--small-text-size);
+      color: #050505;
+    }
+    #pm-aqi-container {
+      margin-top: 0px;
+      padding: 0px;
+      border: 4px solid #ddd;
+      border-radius: 20px;
+      background-color: #f9f9f9;
+      width: 80%;
+      text-align: center;
+    }
+    .separator {
+      margin: 20px 0;
+      height: 3px;
+      background-color: #ddd;
+      width: 90%;
+    }
+      .header-group {
+              font-size: 35px;
+          display: inline-block;
             text-align: center;
-            color: #333;
-        }
-        .data-item {
-            margin-bottom: 10px;
-        }
-        .data-item strong {
-            color: #555;
-        }
-        .aqi-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 5px;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .good {
-            background-color: #a8e0a8;
-            color: #155724;
-        }
-        .moderate {
-            background-color: #ffeeba;
-            color: #856404;
-        }
-        .unhealthy {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-    </style>
+            line-height: 0;
+            margin: 0;
+        }</style>
 </head>
 <body>
-    <div class="container">
-        <h1>ตรวจสอบค่าฝุ่น PM2.5</h1>
-        <div id="data-container">
-            <p>กำลังโหลดข้อมูล...</p>
+  <div class="container">
+        
+
+        <div class="header-group">
+            
+<h3>รายงานสถานการณ์คุณภาพอากาศ</h3>
+            <h4>โรงพยาบาลสมเด็จพระเจ้าตากสินมหาราช จ.ตาก</h4>
+            <p id="current-datetime">อัพเดตล่าสุด: 13 มกราคม 2568 เวลา 15:43:43</p>
         </div>
+<br>
+<br>
+<div id="pm-widget" style="background-color: rgb(253, 192, 78);">
+    <div id="aqi-image-container">
+                <img id="aqi-image" src="./aqi_icon/ic-face-orange.svg" alt="Unhealthy for sensitive groups">
+            </div>
+    <div class="pm-title" id="pm-title">คุณภาพอากาศปานกลาง</div>
+    <div class="pm-value0" id="pm-25">26</div>
+    <div class="small-text">ค่า PM2.5 ไม่ควรเกิน 37.5 มคก./ลบม.</div>
+    <div class="pm-text" id="pm-text">[ประชาชนทั่วไป] สามารถทำกิจกรรมกลางแจ้งได้ตามปกติ [ผู้ที่ต้องดูแลสุขภาพเป็นพิเศษ] หากมีอาการเบื้องต้น เช่น ไอ หายใจลำบาก ระคายเคือง ตา ควรลดระยะเวลาการทำกิจกรรมกลางแจ้ง</div>
+
+    
+
+    <div id="pm-aqi-container">
+      <div class="pm-value" id="pm-aqi">55</div>
+      <div class="small-text">ค่า AQI</div>
     </div>
+  </div></div>
 
-    <script>
-        // URL ของ API
-        const apiUrl = "https://open-api.cmuccdc.org/api/dustboy/station?apikey=AmvZNJ1jyK4K6FO06VbhW0dTpkIfYk8NOOsdPcBp";
+  <script>
+    function calculateAQI(Ci) {
+      let Cmax, Cmin, Imax, Imin;
 
-        // ฟังก์ชันสำหรับดึงข้อมูลจาก API
-        async function fetchData() {
-            try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error("ไม่สามารถดึงข้อมูลจาก API ได้");
+      if (Ci >= 0 && Ci <= 15) {
+        Cmin = 0;
+        Cmax = 15;
+        Imax = 25;
+        Imin = 0;
+      } else if (Ci > 15 && Ci <= 25) {
+        Cmin = 15.1;
+        Cmax = 25;
+        Imax = 50;
+        Imin = 26;
+      } else if (Ci > 25 && Ci <= 37.5) {
+        Cmin = 25.1;
+        Cmax = 37.5;
+        Imax = 100;
+        Imin = 51;
+      } else if (Ci > 37.5 && Ci <= 75) {
+        Cmin = 37.6;
+        Cmax = 75;
+        Imax = 200;
+        Imin = 101;
+      } else if (Ci > 75) {
+        Cmin = 75.1;
+        Cmax = 500;
+        Imax = 500;
+        Imin = 201;
+      } else {
+        throw new Error("Invalid PM2.5 concentration value");
+      }
+
+      const AQI = ((Imax - Imin) / (Cmax - Cmin)) * (Ci - Cmin) + Imin;
+      return Math.round(AQI);
+    }
+
+     const aqiUrl = 'https://open-api.cmuccdc.org/api/dustboy/station?apikey=AmvZNJ1jyK4K6FO06VbhW0dTpkIfYk8NOOsdPcBp';
+    
+     function updateDateTime() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            document.getElementById('current-datetime').textContent = `อัพเดตล่าสุด: ${now.toLocaleDateString('th-TH', options)}`;
+        }
+
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        fetch(aqiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const aqi = calculateAQI(data.pm25);
+                const rgbValue = data.th_color;
+                const rgb = rgbValue.split(",");
+
+                document.getElementById("pm-aqi").textContent = `${aqi}`;
+                document.getElementById("current-datetime").textContent = `อัพเดตล่าสุด: ${data.log_datetime}`;
+                document.getElementById("pm-25").textContent = `${data.pm25}`;
+                document.getElementById("pm-title").textContent = `${data.th_title}`;
+                document.getElementById("pm-text").textContent = `${data.th_caption}`;
+                document.getElementById("pm-widget").style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+
+          
+const aqiImageElement = document.getElementById('aqi-image');
+                if (aqi <= 50) {
+                    aqiImageElement.src = './aqi_icon/ic-face-green.svg';
+                    aqiImageElement.alt = 'Good';
+                } else if (aqi <= 100) {
+                    aqiImageElement.src = './aqi_icon/ic-face-yellow.svg';
+                    aqiImageElement.alt = 'Moderate';
+                } else if (aqi <= 200) {
+                    aqiImageElement.src = './aqi_icon/ic-face-orange.svg';
+                    aqiImageElement.alt = 'Unhealthy';
+                } else {
+                    aqiImageElement.src = './aqi_icon/ic-face-red.svg';
+                    aqiImageElement.alt = 'Very Unhealthy';
                 }
-                const data = await response.json();
-                displayData(data[0]); // แสดงข้อมูลสถานีแรก
-            } catch (error) {
-                document.getElementById("data-container").innerHTML = `<p style="color: red;">เกิดข้อผิดพลาด: ${error.message}</p>`;
-            }
-        }
+            })
+      .catch(error => console.error(error));
+  </script>
 
-        // ฟังก์ชันสำหรับแสดงข้อมูลในหน้าเว็บ
-        function displayData(station) {
-            const container = document.getElementById("data-container");
-            container.innerHTML = `
-                <div class="data-item"><strong>สถานี:</strong> ${station.dustboy_name}</div>
-                <div class="data-item"><strong>PM2.5:</strong> ${station.pm25} µg/m³</div>
-                <div class="data-item"><strong>AQI (ไทย):</strong> ${station.th_title} (${station.th_aqi})</div>
-                <div class="data-item"><strong>AQI (US):</strong> ${station.us_title} (${station.us_aqi})</div>
-                <div class="data-item"><strong>คำแนะนำ:</strong> ${station.us_caption}</div>
-            `;
 
-            // กำหนดสีตามคุณภาพอากาศ
-            let aqiClass = "";
-            if (station.us_aqi <= 50) {
-                aqiClass = "good";
-            } else if (station.us_aqi <= 100) {
-                aqiClass = "moderate";
-            } else {
-                aqiClass = "unhealthy";
-            }
-
-            // แสดงกล่อง AQI
-            const aqiBox = document.createElement("div");
-            aqiBox.className = `aqi-box ${aqiClass}`;
-            aqiBox.textContent = `AQI: ${station.us_aqi}`;
-            container.appendChild(aqiBox);
-        }
-
-        // เรียกใช้งานฟังก์ชัน fetchData เมื่อโหลดหน้าเว็บ
-        window.onload = fetchData;
-    </script>
-</body>
-</html>
+</body></html>
