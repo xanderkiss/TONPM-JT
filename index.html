@@ -174,37 +174,37 @@
         setInterval(updateDateTime, 1000);
         updateDateTime();
 
-        fetch(aqiUrl)
-            .then(response => response.json())
-            .then(data => {
-                const aqi = calculateAQI(data.pm25);
-                const rgbValue = data.th_color;
-                const rgb = rgbValue.split(",");
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    // เข้าถึงข้อมูลใน Array ด้วย data[0]
+    const pm25 = data[0].pm25; // ค่า PM2.5
+    const aqi = calculateAQI(pm25); // คำนวณ AQI
+    const rgbValue = data[0].th_color; // สี RGB
+    const rgb = rgbValue.split(",");
+    document.getElementById("pm-aqi").textContent = `${aqi}`;
+    document.getElementById("current-datetime").textContent = `อัพเดตล่าสุด: ${data[0].log_datetime}`;
+    document.getElementById("pm-25").textContent = `${pm25}`;
+    document.getElementById("pm-title").textContent = `${data[0].th_title}`;
+    document.getElementById("pm-text").textContent = `${data[0].th_caption}`;
+    document.getElementById("pm-widget").style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 
-                document.getElementById("pm-aqi").textContent = `${aqi}`;
-                document.getElementById("current-datetime").textContent = `อัพเดตล่าสุด: ${data.log_datetime}`;
-                document.getElementById("pm-25").textContent = `${data.pm25}`;
-                document.getElementById("pm-title").textContent = `${data.th_title}`;
-                document.getElementById("pm-text").textContent = `${data.th_caption}`;
-                document.getElementById("pm-widget").style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
-
-          
-const aqiImageElement = document.getElementById('aqi-image');
-                if (aqi <= 50) {
-                    aqiImageElement.src = './aqi_icon/ic-face-green.svg';
-                    aqiImageElement.alt = 'Good';
-                } else if (aqi <= 100) {
-                    aqiImageElement.src = './aqi_icon/ic-face-yellow.svg';
-                    aqiImageElement.alt = 'Moderate';
-                } else if (aqi <= 200) {
-                    aqiImageElement.src = './aqi_icon/ic-face-orange.svg';
-                    aqiImageElement.alt = 'Unhealthy';
-                } else {
-                    aqiImageElement.src = './aqi_icon/ic-face-red.svg';
-                    aqiImageElement.alt = 'Very Unhealthy';
-                }
-            })
-      .catch(error => console.error(error));
+    const aqiImageElement = document.getElementById('aqi-image');
+    if (aqi <= 50) {
+      aqiImageElement.src = './aqi_icon/ic-face-green.svg';
+      aqiImageElement.alt = 'Good';
+    } else if (aqi <= 100) {
+      aqiImageElement.src = './aqi_icon/ic-face-yellow.svg';
+      aqiImageElement.alt = 'Moderate';
+    } else if (aqi <= 200) {
+      aqiImageElement.src = './aqi_icon/ic-face-orange.svg';
+      aqiImageElement.alt = 'Unhealthy';
+    } else {
+      aqiImageElement.src = './aqi_icon/ic-face-red.svg';
+      aqiImageElement.alt = 'Very Unhealthy';
+    }
+  })
+  .catch(error => console.error(error));
   </script>
 
 
